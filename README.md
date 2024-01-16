@@ -1,4 +1,4 @@
-# hk_wc - A Golang based tool that mimic's unix's `wc`
+# hk_wc - A Golang based tool that mimics unix's `wc`
 
 ## Setup
 - Execute `make build` to execute the build for this project. This will create a binary in the location `/usr/local/bin`.
