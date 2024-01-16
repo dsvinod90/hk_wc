@@ -10,6 +10,7 @@ import (
 var printNumBytes, printNumLines, printNumWords, printNumChars bool
 var filePath string
 var inputSource string
+var stdIn *os.File
 
 func defineFlags() {
 	flag.BoolVar(&printNumBytes, "c", false, "Print number of bytes in the file")
@@ -21,8 +22,8 @@ func defineFlags() {
 }
 
 func readData() {
-	stdin := os.Stdin
-	data, err := stdin.Stat()
+	stdIn = os.Stdin
+	data, err := stdIn.Stat()
 	handlePathError(err)
 	if data.Size() > 0 {
 		inputSource = "stdin"
@@ -53,7 +54,7 @@ func setReader() (*bufio.Scanner, *os.File) {
 		handlePathError(err)
 		fs = bufio.NewScanner(file)
 	} else {
-		fs = bufio.NewScanner(os.Stdin)
+		fs = bufio.NewScanner(stdIn)
 	}
 	return fs, file
 }
@@ -106,9 +107,13 @@ func main() {
 	defineFlags()
 	readData()
 	if flag.NFlag() == 0 {
-		printNumBytes = true
-		printNumLines = true
-		printNumWords = true
+		if inputSource == "file" {
+			printNumBytes = true
+			printNumLines = true
+			printNumWords = true
+		} else {
+			fmt.Println("Invalid operation, only one flag supported for inputs from STDIN")
+		}
 	}
 	if printNumBytes {
 		scanNumBytes()
