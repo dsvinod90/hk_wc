@@ -2,7 +2,12 @@
 
 ## Setup
 - Execute `make build` to execute the build for this project. This will create a binary in the location `/usr/local/bin`.
+
+  *Note: If make fails due to permission error, try `sudo make build`*
 - If not already added, add `/usr/local/bin` to `PATH`.
+- To clear the binary, go to the project folder and execute `make clear`
+
+  *Note: If make fails due to permission error, try `sudo make clear`*
 
 ## Usage
 ### `-c`: Count the number of bytes in the input file
